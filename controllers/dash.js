@@ -1,6 +1,9 @@
 const Playlist = require('../models/Playlist')
 
 module.exports = {
+    dashboard: async(req,res)=>{
+        res.render('dashboard.ejs')
+    },
     loadFeed: async(req,res)=>{
         console.log('we are cooking with grease loadFeed')
         res.render('dash.ejs')

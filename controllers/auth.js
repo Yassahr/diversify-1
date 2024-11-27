@@ -22,14 +22,17 @@ exports.googleCallback = (req, res, next) => {
   console.log('it got this far')
   passport.authenticate('google', { failureRedirect: '/login' }, (err, user, info) => {
     if (err || !user) {
+      console.log('login in succesful 2')
+
       return res.redirect('/login');
     }
     req.logIn(user, (err) => {
+      console.log('login in succesful 2')
       if (err) {
         return next(err);
       }
       // Successful authentication, redirect home.
-      res.redirect('/');
+      res.redirect('/home');
     });
   })(req, res, next);
 };

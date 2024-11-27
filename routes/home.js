@@ -6,6 +6,7 @@ const { ensureAuth } = require('../middleware/auth')
 //feed
 
 //what are the main things user will be doing on dash
+router.get('/', dashController.dashboard )
 
 //get request to load all of the users other data
 router.get('/loadFeed', dashController.loadFeed )
