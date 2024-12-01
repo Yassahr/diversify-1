@@ -16,6 +16,8 @@ const MediaSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  //This should be selecting the id/name that the media is apart of
+  // playlists:[Playlist.name]
   // {timestamps: true}
 })
 

@@ -25,6 +25,9 @@ const PlaylistSchema = new mongoose.Schema({
     description: String,
     image: String
   },
+  //trouble adding media schema array
+  // media:[MediaSchema],
+
   // {timestamps: true },
   public:{
     type: Boolean,

@@ -2,17 +2,7 @@ const passport = require('passport')
 const validator = require('validator')
 const User = require('../models/User')
 
-// exports.googleAuth = (req, res) => {
-//   passport.authenticate('google', { scope: ['profile'] });
-//   console.log('boom')
-// }
-// exports.googleCallback=(req, res) => {
-//   passport.authenticate('google', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     res.redirect('/');
-//   }
-// }
+
 exports.googleAuth = (req, res, next) => {
   passport.authenticate('google', { scope: ['profile'] })(req, res, next);
   console.log('boom');
@@ -22,7 +12,7 @@ exports.googleCallback = (req, res, next) => {
   console.log('it got this far')
   passport.authenticate('google', { failureRedirect: '/login' }, (err, user, info) => {
     if (err || !user) {
-      console.log('login in succesful 2')
+      console.log(err, user)
 
       return res.redirect('/login');
     }
@@ -40,7 +30,7 @@ exports.googleCallback = (req, res, next) => {
 
 exports.getLogin = (req, res) => {
   if (req.user) {
-    return res.redirect('/dash')
+    return res.redirect('/home')
   }
   // return res.redirect('/auth/google')
   res.render('login', {
@@ -76,7 +66,7 @@ exports.postLogin = (req, res, next) => {
         return next(err)
       }
       req.flash('success', { msg: 'Success! You are logged in.' })
-      res.redirect(req.session.returnTo || '/todos')
+      res.redirect(req.session.returnTo || '/home')
     })
   })(req, res, next)
 }
@@ -96,7 +86,7 @@ exports.logout = (req, res) => {
 
 exports.getSignup = (req, res) => {
   if (req.user) {
-    return res.redirect('/todos')
+    return res.redirect('/home')
   }
   res.render('signup', {
     title: 'Create Account'

@@ -1,23 +1,9 @@
 const Todo = require('../models/Playlist')
 
 module.exports = {
-  getTodos: async (req, res) => {
-    console.log("todo")
-    res.render('dash.ejs')
-    // try {
-    //   const todoItems = await Todo.find({ userId: req.user.id })
-    //   const itemsLeft = await Todo.countDocuments({
-    //     userId: req.user.id,
-    //     completed: false
-    //   })
-    //   res.render('todos.ejs', {
-    //     todos: todoItems,
-    //     left: itemsLeft,
-    //     user: req.user
-    //   })
-    // } catch (err) {
-    //   console.log(err)
-    // }
+  playlistView: async (req, res) => {
+    res.render('playlist.ejs')
+    
   },
   createTodo: async (req, res) => {
     try {
@@ -27,7 +13,7 @@ module.exports = {
         userId: req.user.id
       })
       console.log('Todo has been added!')
-      res.redirect('/todos')
+      res.redirect('/home')
     } catch (err) {
       console.log(err)
     }

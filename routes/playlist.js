@@ -8,7 +8,7 @@ const { ensureAuth } = require('../middleware/auth')
 
 //Maybe adding more gets for type of playlist-> audio, video, music
 
-router.get('/', ensureAuth, playlistController.getTodos)//Playlist dashboard
+router.get('/', ensureAuth, playlistController.playlistView)//Playlist dashboard
 
 router.post('/createTodo', playlistController.createTodo)//Create new  playlist 
 //prompted to create a name and type of media, 
