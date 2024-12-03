@@ -4,6 +4,7 @@ module.exports = {
   playlistView: async (req, res) => {
     res.render('playlist.ejs')
     
+    
   },
   createTodo: async (req, res) => {
     try {

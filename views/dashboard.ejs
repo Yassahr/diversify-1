@@ -15,11 +15,13 @@
 
    <!-- list of Playlists -->
     <ul class="flex justify-center">
+        <!-- list of all of the playlist -->
+        <% playlist.forEach(ele=>{ %>
         <li class="border border-slate-500">
-            <h2 class="text-slate-300">Name of Playlist</h2>
+            <h2 class="text-slate-300"><%= ele.name %></h2>
             <div>
                 <!-- Likes -->
-                <span class="text-slate-300">Likes</span>
+                <span class="text-slate-300"><%= ele.likes %></span>
                 <button class="text-slate-300">Like Button</button>
             </div>
             <!--List of media inside of playlist -->
@@ -36,6 +38,7 @@
                         
                     </div>
                 </li>
+            <% }) %>    
             </ul>
         </li>
     </ul>

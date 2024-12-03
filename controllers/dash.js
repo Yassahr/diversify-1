@@ -2,7 +2,14 @@ const Playlist = require('../models/Playlist')
 
 module.exports = {
     dashboard: async(req,res)=>{
-        res.render('dashboard.ejs')
+        try{
+            const playlist = await Playlist.find({})
+            console.log(playlist)
+            res.render('dashboard.ejs', {playlist: playlist})
+
+        }catch(err){
+            console.log(err)
+        }
     },
     loadFeed: async(req,res)=>{
         console.log('we are cooking with grease loadFeed')

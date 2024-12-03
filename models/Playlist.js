@@ -33,6 +33,10 @@ const PlaylistSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   }
-})
+}, 
+{ 
+  timestamps: { createdAt: 'created_at' } 
+}
+)
 
 module.exports = mongoose.model('Playlist', PlaylistSchema)
