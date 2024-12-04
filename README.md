@@ -38,4 +38,3 @@ bcrypt, connect-mongo, ejs, express, express-flash, express-session, mongodb, mo
   - PORT: 2121 (can be any port example: 3000)
   - DB_STRING: `your database URI`
   ***
-

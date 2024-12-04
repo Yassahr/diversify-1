@@ -5,7 +5,6 @@ const homeController = require('../controllers/home')
 const { ensureAuth, ensureGuest } = require('../middleware/auth')
 const passport = require('passport')
 
-
 router.get('/', homeController.getIndex)
 //spotify auth
 // router.get('/', passport.authenticate('spotify'));

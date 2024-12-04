@@ -2,31 +2,33 @@ const passport = require('passport')
 const validator = require('validator')
 const User = require('../models/User')
 
-
 exports.googleAuth = (req, res, next) => {
-  passport.authenticate('google', { scope: ['profile'] })(req, res, next);
-  console.log('boom');
-};
+  passport.authenticate('google', { scope: ['profile'] })(req, res, next)
+  console.log('boom')
+}
 
 exports.googleCallback = (req, res, next) => {
   console.log('it got this far')
-  passport.authenticate('google', { failureRedirect: '/login' }, (err, user, info) => {
-    if (err || !user) {
-      console.log(err, user)
+  passport.authenticate(
+    'google',
+    { failureRedirect: '/login' },
+    (err, user, info) => {
+      if (err || !user) {
+        console.log(err, user)
 
-      return res.redirect('/login');
-    }
-    req.logIn(user, (err) => {
-      console.log('login in succesful 2')
-      if (err) {
-        return next(err);
+        return res.redirect('/login')
       }
-      // Successful authentication, redirect home.
-      res.redirect('/home');
-    });
-  })(req, res, next);
-};
-
+      req.logIn(user, (err) => {
+        console.log('login in succesful 2')
+        if (err) {
+          return next(err)
+        }
+        // Successful authentication, redirect home.
+        res.redirect('/home')
+      })
+    }
+  )(req, res, next)
+}
 
 exports.getLogin = (req, res) => {
   if (req.user) {
