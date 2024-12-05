@@ -19,7 +19,10 @@
             <% playlist.forEach(ele=>{ %>
                 <li class="border border-slate-500 pb-3 sm:pb-4 flex">
                     <div class="flex flex-col justify-center space-x-4 rtl:space-x-reverse  border border-slate-500">
-                        <h2 class="text-slate-300 border border-slate-500"><%= ele.name %></h2>
+                        <!-- Link to playlist using ejs and query param syntax is browser -->
+                        <a href='#'> 
+                            <h2 class="text-slate-300 border border-slate-500"><%= ele.name %></h2>
+                        </a>
                             <!-- Likes -->
                             <span class="text-slate-300 border border-slate-500"><%= ele.likes %></span>
                             <button class="text-slate-300 border border-slate-500">Like Button</button>
@@ -28,8 +31,11 @@
                             <!-- Individual media block -->
                             <li class="border border-slate-500">
                                 <div>
-                                    <!-- Media name -->
-                                    <h3 class="text-slate-300 border border-slate-500">Media Name</h3>
+                                    <!-- Link to media using ejs and query param syntax is browser -->
+                                    <a href='#'> 
+                                        <!-- Media name -->
+                                        <h3 class="text-slate-300 border border-slate-500">Media Name</h3>
+                                    </a>
                                     <!-- Thumbnail Image of Video -->
                                     <imgz src="#"/> 
                                 <!-- Media description -->
