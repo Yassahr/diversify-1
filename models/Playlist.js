@@ -6,11 +6,18 @@ const PlaylistSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      minLength: 1,
+      maxLength: 20,
       required: true
     },
     creatorId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       required: true
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
     },
     mediaType: {
       type: String,
@@ -20,24 +27,17 @@ const PlaylistSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
-    media: {
-      id: String,
-      genre: String,
+    media: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'media',
       description: String,
       image: String
-    },
-    // trouble adding media schema array
-    // songList:[mediaSchema],
-
-    // {timestamps: true },
+    }],
     public: {
       type: Boolean,
       default: false
-    }
+    },
   },
-  {
-    timestamps: { createdAt: 'created_at' }
-  }
 )
 
 module.exports = mongoose.model('Playlist', PlaylistSchema)
