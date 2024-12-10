@@ -9,18 +9,21 @@ const { ensureAuth } = require('../middleware/auth')
 
 router.get('/', ensureAuth, playlistController.playlistView) //Playlist dashboard
 
-router.post('/createTodo', playlistController.createTodo) //Create new  playlist
+router.post('/createPlaylist/:id', playlistController.createPlaylist) //Create new  playlist
 //prompted to create a name and type of media,
 //maybe a seperate get request to open up playlist page to search for media to add
 //search would be inside of get request controller code block
 
-router.put('/markComplete', playlistController.markComplete)
+router.put('/addPlaylist/:id', playlistController.addPlaylist)
+
+
+router.put('/likePlaylist/:id', playlistController.likePlaylist)
 //put request to like or upvote
 
-router.put('/markIncomplete', playlistController.markIncomplete)
+router.put('/unlikePlaylist/:id', playlistController.unlikePlaylist)
 //unlike
 
-router.delete('/deleteTodo', playlistController.deleteTodo) //Create delete  playlist that belongs to you
+router.delete('/deletePlaylist/:id', playlistController.deletePlaylist) //Create delete  playlist that belongs to you
 
 module.exports = router
 

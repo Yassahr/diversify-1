@@ -1,6 +1,10 @@
 const Playlist = require('../models/Playlist')
 
 module.exports = {
+  getIndex: (req, res) => {
+    console.log('get index')
+    res.render('index.ejs')
+  },
   dashboard: async (req, res) => {
     try {
       const playlist = await Playlist.find({})
