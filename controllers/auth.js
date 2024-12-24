@@ -30,6 +30,7 @@ exports.googleCallback = (req, res, next) => {
   )(req, res, next)
 }
 
+//may also get deleted since google auth is taking care of this
 exports.getLogin = (req, res) => {
   if (req.user) {
     return res.redirect('/home')
@@ -39,7 +40,7 @@ exports.getLogin = (req, res) => {
     title: 'Login'
   })
 }
-
+//will likely be deleted
 exports.postLogin = (req, res, next) => {
   const validationErrors = []
   if (!validator.isEmail(req.body.email))
@@ -94,7 +95,9 @@ exports.getSignup = (req, res) => {
     title: 'Create Account'
   })
 }
-
+//May need to add a post signup onto the route for auth
+//Check the user DB to see if the user email exists
+//If user email exist redirect them to sign in
 exports.postSignup = async (req, res, next) => {
   const validationErrors = []
   if (!validator.isEmail(req.body.email))

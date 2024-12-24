@@ -18,6 +18,7 @@ const MediaSchema = new mongoose.Schema(
       default: 0
     },
     addedOn: {
+      //might need an additional date the see the latest time it was added
       type: Date,
       default: Date.now,
     },

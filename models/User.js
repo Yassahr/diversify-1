@@ -15,7 +15,12 @@ const UserSchema = new mongoose.Schema({
     unique: true
   },
   password: String,
-  playlist: { type: String },
+  //need to add an array of playlists
+  playlist: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Playlist',
+    description: String
+  }],
   isGoogleAuth: {
     type: Boolean,
     default: false
