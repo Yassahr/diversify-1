@@ -1,6 +1,7 @@
 const Playlist = require('../models/Playlist')
 const Media = require('../models/Media')
 const User = require('../models/User')
+const ObjectId = require('mongoose').Types.ObjectId;
 
 
 
@@ -51,24 +52,21 @@ module.exports = {
   getProfile: async (req, res) => {
     try {
       console.log(req.params.profileId)
-      //want profile to return a array of playlists
       const profile = await User.findById(req.params.profileId).select('playlists').lean()
-      //return the full objects for the playlist from the playlist controller
-      const userPlaylist= profile.playlists.forEach((el, i, arr)=>{ 
+
+      const userPlaylist= await Promise.all(
+        profile.playlists.map(async(el)=>{ 
         el= el.toString()
-        console.log("User arr of 1", arr[0], el.toString())
-        let playlistArr =Playlist.aggregate()
-        .match({ "id": el})
-         .project({"name":1})
-         console.log(playlistArr)
-        // console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPP",Playlist.find({id: el}).select({name: 1, likes: 1}), "end")
-        return Playlist.findById(el).lean()})
-     
-      console.log( "Userplaylist", userPlaylist)
-      // let playlist= profile.map(pl=> Playlist.findById(pl).sort({ createdAt: "desc" }).lean())
-      // console.log(playlist)
-      //use playlist to hold an array of playlist from the model(use map)
-      // const playlist = await Playlist.findById(req.params.id)
+        console.log(ObjectId.isValid(el)) 
+        console.log(typeof el, el) 
+ 
+      if (!ObjectId.isValid(el)){ 
+        return `No task with id :${el}`
+      }
+       return await Playlist.findById(el).select({name: 1, likes: 1}).lean().exec()
+      
+      }))
+      console.log(userPlaylist)
       res.render('profile.ejs', { userPlaylist: userPlaylist, user: req.user })
       //Go to the user model and load all of the playlists associated with user
       //On EJS logic to only show playlist with public property 
