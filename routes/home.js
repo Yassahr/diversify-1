@@ -14,7 +14,7 @@ router.get('/', dashController.dashboard)
 router.get('/profile/:profileId', dashController.getProfile)
 
 //post request adding playlist/media to there playlist( add to public or private)
-router.post('/addPlaylist', ensureAuth, dashController.addPlaylist)
+router.post('/addPlaylist/:playlistId', ensureAuth, dashController.addPlaylist)
 
 //Put request to like playlist
 router.put('/likePlaylist/:playlistId', ensureAuth, dashController.likePlaylist)

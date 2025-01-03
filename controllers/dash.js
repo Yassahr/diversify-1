@@ -12,13 +12,12 @@ module.exports = {
   },
   dashboard: async (req, res) => {
     try {
-      const playlist = await Playlist.find({})
-      console.log(playlist)
-      res.render('dashboard.ejs', { playlist: playlist })
+      const post = await Media.find().sort({addedOn: -1 }).lean()
+      console.log(post)
+      res.render('dashboard.ejs', { post: post })
       //get all of the media in the collection
       //sort them in reverse chronological order based on the when X was added on(may need to add additional logic to schema)
       //Grab the name of the playlist that is on the end of the list
-      //Filter for media that are already associated with user's playlist(maybe)
       //Media ID, playlistName(id), likes, name, media details being sent to the ejs
 
     } catch (err) {
@@ -74,12 +73,35 @@ module.exports = {
       console.log(err)
     }
   },
-  addPlaylist: (req, res) => {
+  addPlaylist: async(req, res) => {
     console.log('we are cooking with grease addPlaylist')
     //this will be a post
-    //when the add button is clicked(client-side) 
-    //a pop-up will show asking for the name of the playlist and whether it is public or private(may be client side)
-    //button to send information(name and oublic status)
+    //when the add button is clicked(method override) 
+    let newPlaylist;
+    try{
+      Playlist.findById(req.param.playlistId).exec(
+      function(err, doc) {
+          doc._id = new mongoose.Types.ObjectId();
+          newPlaylist= doc._id
+          doc.isNew = true; //<--------------------IMPORTANT
+          doc.overwrite({ creatorId: req.user.id })
+          doc.save();
+      });
+      //adding playlist to user playlist array
+      await User.findOneandUpdate(
+        { _id: req.params.id },
+        { $push: { playlist: doc._id } },
+       done
+      )
+
+    }catch (err) {
+      console.log(err);
+    }
+
+    
+  
+  
+    //button to send information(req.user and playlist ID)
     //the playlist media will be copied(insert method) 
       //added to the user playlist array
       //new id will be given

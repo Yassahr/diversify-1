@@ -1,8 +1,27 @@
 const Playlist = require('../models/Playlist')
+const Media = require('../models/Media')
+
 
 module.exports = {
   playlistView: async (req, res) => {
-    res.render('playlist.ejs')
+    try{
+    const playlist= await Playlist.findById('675f5bc765b81fad0ddbcb92')
+      console.log(playlist)
+    // const mediaList= await Promise.all(
+    //   playlist.media.map(async(el)=>{ 
+    //   el= el.toString()
+    //   console.log(ObjectId.isValid(el)) 
+    //   console.log(typeof el, el) 
+
+    // if (!ObjectId.isValid(el)){ 
+    //   return `No task with id :${el}`
+    // }
+    //  return await Media.findById(el).select({name: 1, likes: 1}).lean().exec()
+    // })) 
+    res.render('playlist.ejs', {playlist: playlist})
+  }catch(err){
+    console.log(err)
+  }
   },
   createPlaylist: async (req, res) => {
     try {
@@ -23,6 +42,7 @@ module.exports = {
   },
   //this will using the youtube api
   addNewMedia: async (req, res) => {
+    //be sure to include pushing to on playlist media property
     try {
       await Playlist.create({
         todo: req.body.todoItem,

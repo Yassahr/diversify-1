@@ -1,0 +1,36 @@
+<!--List out all of the media types -->
+<!-- ability to play it in frame -->
+<%- include('partials/header') -%>
+
+<h1 class="flex justify-center my-10 text-slate-300 text-5xl drop-shadow-2xl">Playlist</h1>
+   <!-- Playlist -->
+   <div>
+        <h2>Playlist Name</h2>
+
+        <!--List of media inside of playlist -->
+        <ul>
+            <li class="flex justify-center">
+                <div>
+                    <!-- Media name -->
+                    <h3 class="text-slate-300">Media Name</h3>
+                    <!-- Thumbnail of Video -->
+                    <iframe
+                        title="Access to YT for Video"
+                        width="300"
+                        height="200"
+                        src="https://www.youtube.com/watch?v=qeqj5GnoFUY">
+                    </iframe> 
+                   <!-- Media description -->
+                   <p class="text-slate-300">Description of media</p>
+                   <!-- Likes -->
+                    <span class="text-slate-300">Likes</span>
+                    <!-- Like Button -->
+                    <button class="text-slate-300">Like Button</button>
+                </div>
+            </li>
+
+        </ul>
+       
+   </div>
+     
+<%- include('partials/footer') -%>

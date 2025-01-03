@@ -1,0 +1,58 @@
+<!-- Feed -->
+    <!-- Playlist and media suggestions from all other users(somewhat randomized) -->
+    <!-- Maybe some functionality to add so you can comment -->
+    <!-- Ability to like and add playlists to your collection -->
+<!-- User Dashboard -->
+    <!--  Collection of both public and private playist user has-->
+    <!-- Can be filtered by type of playlist -->
+    <!-- Future state it is an accordion with make information and scrollable with link to the actual playlist -->
+<%- include('partials/header') -%>
+<h1 class="my-10 text-slate-300 text-5xl drop-shadow-2xl">Dashboard</h1>
+    <div class="max-w-80">
+    <!-- Playlist -->
+   
+         <h2>All Playlist</h2>
+
+   <!-- list of Playlists -->
+        <ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
+            <!-- list of all of the playlist -->
+            <% playlist.forEach(ele=>{ %>
+                <li class="flex border border-slate-500 pb-3 sm:pb-4">
+                    <div class="space-x-4 rtl:space-x-reverse  align-center border border-slate-500 size-full">
+                        <!-- Link to playlist using ejs and query param syntax is browser -->
+                        <a href='#'> 
+                            <h2 class="text-slate-300 border border-slate-500 mx-auto"><%= ele.name %></h2>
+                        </a>
+                        <!-- Playlist creator name + method override to get to profile -->
+                        
+                        <a href="/profile/<%= ele._id%>"> 
+                            <h3 class="text-slate-300 border border-slate-500">User's Name </h3>
+                        </a>
+                            <!-- Likes -->
+                            <span class="text-slate-300 border border-slate-500"><%= ele.likes %></span>
+                            <button class="text-slate-300 border border-slate-500">Like Button</button>
+                        <!--List of media inside of playlist -->
+                        <ul class="flex">
+                            <!-- Individual media block -->
+                            <li class="border border-slate-500">
+                                <div>
+                                    <!-- Link to media using ejs and query param syntax is browser -->
+                                    <a href='#'> 
+                                        <!-- Media name -->
+                                        <h3 class="text-slate-300 border border-slate-500">Media Name</h3>
+                                    </a>
+                                    <!-- Thumbnail Image of Video -->
+                                    <imgz src="#"/> 
+                                <!-- Media description -->
+                                    <p class="text-slate-300 border border-slate-500">Description of media</p>
+                                </div>
+                    
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+</div>
+<%- include('partials/footer') -%>
