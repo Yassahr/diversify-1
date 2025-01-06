@@ -2,8 +2,15 @@ const Media = require('../models/Media')
 
 module.exports = {
   mediaView: async (req, res) => {
-    res.render('media.ejs')
+    try{
+    console.log(req.params.id)
+    const media = await Media.findById(req.params.id).lean()
+      console.log(media)
+    res.render('media.ejs', {media:media})
     //in ejs it will be the media and dets 
+    }catch(err){
+      console.log(err)
+    }
   },
   //Adding media that already exists
   addMedia: async (req, res) => {

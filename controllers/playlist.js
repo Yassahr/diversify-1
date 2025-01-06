@@ -1,24 +1,19 @@
 const Playlist = require('../models/Playlist')
 const Media = require('../models/Media')
+const ObjectId = require('mongoose').Types.ObjectId;
+
 
 
 module.exports = {
   playlistView: async (req, res) => {
     try{
-    const playlist= await Playlist.findById('675f5bc765b81fad0ddbcb92')
-      console.log(playlist)
-    // const mediaList= await Promise.all(
-    //   playlist.media.map(async(el)=>{ 
-    //   el= el.toString()
-    //   console.log(ObjectId.isValid(el)) 
-    //   console.log(typeof el, el) 
-
-    // if (!ObjectId.isValid(el)){ 
-    //   return `No task with id :${el}`
-    // }
-    //  return await Media.findById(el).select({name: 1, likes: 1}).lean().exec()
-    // })) 
-    res.render('playlist.ejs', {playlist: playlist})
+      console.log(req.params.playlistId)
+      const playlist= await Playlist.findById(req.params.playlistId).lean().select('media')
+      console.log(playlist, typeof playlist )
+    const mediaList= await Promise.all(
+      playlist.media.map(async(el)=> el)) 
+    console.log(mediaList)
+    res.render('playlist.ejs', {playlist: playlist, mediaList: mediaList})
   }catch(err){
     console.log(err)
   }
