@@ -66,7 +66,7 @@ module.exports = {
       
       }))
       console.log(userPlaylist)
-      console.log(mediaList)
+      // console.log(mediaList)
       res.render('profile.ejs', { userPlaylist: userPlaylist, user: req.user })
       //Go to the user model and load all of the playlists associated with user
       //On EJS logic to only show playlist with public property 

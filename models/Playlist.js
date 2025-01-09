@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const media = require('./Media.js')
+const User = require('./User.js')
+
 // const mediaSchema = mongoose.model('Media')
 
 const PlaylistSchema = new mongoose.Schema(

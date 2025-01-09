@@ -96,7 +96,11 @@
                     <tbody>
                         <%mediaList.forEach((ele, i)=>{ %>
                             <tr class="border-b dark:border-gray-700">
-                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><%=ele.name%></th>
+                                 <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <a href="/media/<%=ele.id%>" class="hover:text-gray-400">
+                                         <%=ele.name%>
+                                     </a>                              
+                                </th>
                                 <td class="px-4 py-3"><%=ele.description%></td>
                                 <td class="px-4 py-3">Apple</td>
                                 <td class="px-4 py-3">300</td>

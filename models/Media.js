@@ -1,6 +1,6 @@
 //Schemea searching playlists for artists
 const mongoose = require('mongoose')
-//dummy data
+const User = require('./User.js')
 
 const MediaSchema = new mongoose.Schema(
   {
@@ -13,10 +13,11 @@ const MediaSchema = new mongoose.Schema(
       description: String,
       image: String
     },
-    likes: {
-      type: Number,
+    likes: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       default: 0
-    },
+    }],
     addedOn: {
       //might need an additional date the see the latest time it was added
       type: Date,

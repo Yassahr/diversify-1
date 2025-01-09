@@ -3,11 +3,8 @@ const Media = require('../models/Media')
 module.exports = {
   mediaView: async (req, res) => {
     try{
-    console.log(req.params.id)
-    const media = await Media.findById(req.params.id).lean()
-      console.log(media)
-    res.render('media.ejs', {media:media})
-    //in ejs it will be the media and dets 
+      const media = await Media.findById(req.params.id).lean()
+      res.render('media.ejs', {media:media})
     }catch(err){
       console.log(err)
     }
