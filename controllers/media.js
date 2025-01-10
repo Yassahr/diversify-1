@@ -38,10 +38,14 @@ module.exports = {
     try {
       await Media.findOneAndUpdate(
         { _id: req.params.id },
-        {
-          completed: true
+        {$addToSet: {
+          likes: {
+            $push: req.user._id
+          }
         }
-      )
+      }).exec().then(response => res.json(response)).catch(next)
+
+      
       console.log('Marked Complete')
       res.json('Marked Complete')
     //find the media id in DB(using req.params)
