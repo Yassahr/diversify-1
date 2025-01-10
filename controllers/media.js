@@ -34,9 +34,10 @@ module.exports = {
     }
   },
   likeMedia: async (req, res) => {
+    
     try {
       await Media.findOneAndUpdate(
-        { _id: req.body.todoIdFromJSFile },
+        { _id: req.params.id },
         {
           completed: true
         }
