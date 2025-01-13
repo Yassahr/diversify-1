@@ -1,6 +1,8 @@
 //Schemea searching playlists for artists
 const mongoose = require('mongoose')
 const User = require('./User.js')
+const Playlist = require('./Playlist.js')
+
 
 const MediaSchema = new mongoose.Schema(
   {
@@ -25,7 +27,8 @@ const MediaSchema = new mongoose.Schema(
     },
     //The date playlist the media is apart of and the date it was added to the playlist
     onPlaylist: [{ 
-      id: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'Playlist',
       addedDated: Date
     }]
 

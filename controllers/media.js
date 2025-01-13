@@ -34,7 +34,7 @@ module.exports = {
     }
   },
   likeMedia: async (req, res) => {
-    
+    console.log(req.user._id, req.params.id)
     try {
       await Media.findOneAndUpdate(
         { _id: req.params.id },
@@ -43,10 +43,9 @@ module.exports = {
             $push: req.user._id
           }
         }
-      }).exec().then(response => res.json(response)).catch(next)
+      })
+      // .exec().then(response => res.json(response)).
 
-      
-      console.log('Marked Complete')
       res.json('Marked Complete')
     //find the media id in DB(using req.params)
     //Get the likes and increment by 1
