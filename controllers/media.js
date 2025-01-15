@@ -1,4 +1,5 @@
 const Media = require('../models/Media')
+const ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = {
   mediaView: async (req, res) => {
