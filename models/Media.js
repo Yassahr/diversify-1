@@ -32,6 +32,8 @@ const MediaSchema = new mongoose.Schema({
       addedDate: Date,
     },
   ],
+ 
 });
+
 
 module.exports = mongoose.model("Media", MediaSchema);

@@ -12,9 +12,15 @@ module.exports = {
     try {
       const user = req.user;
       // console.log(user);
-      const post = await Media.find().sort({ addedOn: -1 }).lean();
-      // const playlistDets= await post.onPlaylist
-      res.render("dashboard.ejs", { post: post, user: user });
+      const posts = await Media.find().sort({ addedOn: -1 }).lean();
+      
+      await Promise.all(posts.map(async media=>{
+        // console.log('media',media._id)
+        return media.like =  await getLike(media._id) 
+        //  console.log('medialikes',media.likes)
+      }))
+      console.log('posts',posts)
+      res.render("dashboard.ejs", { post: posts, user: user });
 
       //Media ID, playlistName(id), likes, name, media details being sent to the ejs
     } catch (err) {
@@ -51,7 +57,6 @@ module.exports = {
       const profile = await User.findById(req.params.profileId)
         .select("playlists")
         .lean();
-      // console.log(profile);
       const userPlaylist = await Promise.all(
         profile.playlists.map(async (el) => {
           el = el.toString();
@@ -126,5 +131,19 @@ module.exports = {
     //if user does not exist add them to array
     //return null
     console.log("we are cooking with grease unlikePlaylist");
-  },
+  }
+  //helper function not sure if it needs to be inside object
+  
 };
+async function getLike(id){
+  let mediaId= new ObjectId(id);
+  let likes = await Media.aggregate([
+    { $match: {_id: mediaId}  }, // Match the specific document
+    { 
+      $project: { 
+        likesCount: { $size: "$likes" } // Add the size of the `likes` array as `likesCount`
+      } 
+    }
+  ])
+  return likes[0].likesCount
+}

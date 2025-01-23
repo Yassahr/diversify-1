@@ -57,16 +57,9 @@ module.exports = {
           } 
         }
       ])
-      
+
       console.log("likes",likes, likes[0].likesCount, mediaId)
-      // let likes= Media.aggregate([
-      //   {
-      //     $project: {
-      //       _id: req.params.id,
-      //       like: { size: "$likes" },
-      //     },
-      //   },
-      // ]);
+      
       res.redirect("/home")   
       //find the media id in DB(using req.params)
       //Get the likes and increment by 1
