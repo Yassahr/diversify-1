@@ -5,7 +5,9 @@ module.exports = {
   mediaView: async (req, res) => {
     try {
       const media = await Media.findById(req.params.id).lean();
-      res.render("media.ejs", { media: media });
+      const likes = await getLike(req.params.id)
+      console.log(likes)
+      res.render("media.ejs", { media: media, likes: likes});
     } catch (err) {
       console.log(err);
     }
@@ -108,3 +110,16 @@ module.exports = {
     }
   },
 };
+
+async function getLike(id){
+  let mediaId= new ObjectId(id);
+  let likes = await Media.aggregate([
+    { $match: {_id: mediaId}  }, // Match the specific document
+    { 
+      $project: { 
+        likesCount: { $size: "$likes" } // Add the size of the `likes` array as `likesCount`
+      } 
+    }
+  ])
+  return likes[0].likesCount
+}

@@ -147,3 +147,8 @@ async function getLike(id){
   ])
   return likes[0].likesCount
 }
+//Query for all playlists that have media if
+async function playlistNames(id){
+  let playlistLists = await Playlist.find({media: {$eleMatch:{_id: id}}})
+  return playlistLists
+}
