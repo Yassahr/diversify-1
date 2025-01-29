@@ -11,18 +11,15 @@ module.exports = {
   dashboard: async (req, res) => {
     try {
       const user = req.user;
-      // console.log(user);
       const posts = await Media.find().sort({ addedOn: -1 }).lean();
-      
+      //get the Ids and the likes for all media loaded on pages
       await Promise.all(posts.map(async media=>{
         // console.log('media',media._id)
-        return media.like =  await getLike(media._id) 
+        return media.like = await getLike(media._id) 
         //  console.log('medialikes',media.likes)
       }))
-      console.log('posts',posts)
+// >>will need to add on playlist here
       res.render("dashboard.ejs", { post: posts, user: user });
-
-      //Media ID, playlistName(id), likes, name, media details being sent to the ejs
     } catch (err) {
       console.log(err);
     }
@@ -54,15 +51,14 @@ module.exports = {
   getProfile: async (req, res) => {
     try {
       console.log(req.params.profileId);
+      //find document associated with user
       const profile = await User.findById(req.params.profileId)
         .select("playlists")
         .lean();
+        //return playlists associated with each user
       const userPlaylist = await Promise.all(
         profile.playlists.map(async (el) => {
           el = el.toString();
-          console.log(ObjectId.isValid(el));
-          // console.log(typeof el, el);
-
           if (!ObjectId.isValid(el)) {
             return `No task with id :${el}`;
           }
@@ -72,15 +68,22 @@ module.exports = {
             .exec();
         }),
       );
-      // console.log(userPlaylist);
-      // console.log(mediaList)
+      console.log(userPlaylist);
+
+      //get mediaList for each playlist
+      const mediaPlaylist = await Promise.all(
+         userPlaylist.map(async(media)=>{
+          console.log(mediaList(media._id))
+          return mediaList(media._id)
+        })
+      )
+      console.log(mediaPlaylist)
       res.render("profile.ejs", { userPlaylist: userPlaylist, user: req.user });
-      //Go to the user model and load all of the playlists associated with user
-      //On EJS logic to only show playlist with public property
     } catch (err) {
       console.log(err);
     }
   },
+  //may need to add a function when the tracklist is  expanded get all of the media 
   addPlaylist: async (req, res) => {
     console.log("we are cooking with grease addPlaylist");
     //this will be a post
@@ -151,4 +154,8 @@ async function getLike(id){
 async function playlistNames(id){
   let playlistLists = await Playlist.find({media: {$eleMatch:{_id: id}}})
   return playlistLists
+}
+async function mediaList(id){
+  let mediaLists = await Playlist.findById((id)).select('media').lean()
+  // console.log(mediaLists)
 }
