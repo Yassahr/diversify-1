@@ -11,12 +11,12 @@ module.exports = {
   dashboard: async (req, res) => {
     try {
       const user = req.user;
+      //all post sorted from most-> less recent
       const posts = await Media.find().sort({ addedOn: -1 }).lean();
+
       //get the Ids and the likes for all media loaded on pages
       await Promise.all(posts.map(async media=>{
-        // console.log('media',media._id)
         return media.like = await getLike(media._id) 
-        //  console.log('medialikes',media.likes)
       }))
 // >>will need to add on playlist here
       res.render("dashboard.ejs", { post: posts, user: user });
@@ -55,7 +55,7 @@ module.exports = {
       const profile = await User.findById(req.params.profileId)
         .select("playlists")
         .lean();
-        //return playlists associated with each user
+       //return playlists associated with each user
       const userPlaylist = await Promise.all(
         profile.playlists.map(async (el) => {
           el = el.toString();
@@ -68,17 +68,14 @@ module.exports = {
             .exec();
         }),
       );
-      console.log(userPlaylist);
-
-      //get mediaList for each playlist
-      const mediaPlaylist = await Promise.all(
-         userPlaylist.map(async(media)=>{
-          console.log(mediaList(media._id))
-          return mediaList(media._id)
-        })
-      )
-      console.log(mediaPlaylist)
-      res.render("profile.ejs", { userPlaylist: userPlaylist, user: req.user });
+      // console.log(userPlaylist);
+//get mediaList for each playlist
+   let playlistMedia =  await Promise.all(userPlaylist.map(async(media)=> await mediaList(media._id)))
+        //Thought should make this into seperate function that param is id of playlist  
+      console.log("playlistMedia",playlistMedia)
+      //array of media object. 
+      // boom[0].media[0].name
+      res.render("profile.ejs", { userPlaylist: userPlaylist, user: req.user, playlistMedia:playlistMedia });
     } catch (err) {
       console.log(err);
     }
@@ -138,6 +135,7 @@ module.exports = {
   //helper function not sure if it needs to be inside object
   
 };
+//used to get likes # for media
 async function getLike(id){
   let mediaId= new ObjectId(id);
   let likes = await Media.aggregate([
@@ -150,12 +148,9 @@ async function getLike(id){
   ])
   return likes[0].likesCount
 }
-//Query for all playlists that have media if
-async function playlistNames(id){
-  let playlistLists = await Playlist.find({media: {$eleMatch:{_id: id}}})
-  return playlistLists
-}
+//Query for all media given playlist Id
 async function mediaList(id){
-  let mediaLists = await Playlist.findById((id)).select('media').lean()
-  // console.log(mediaLists)
+  let mediaLists = await Playlist.findById((id)).select('media.name').lean()
+  // console.log('medialist',mediaLists.media)
+  return mediaLists.media
 }

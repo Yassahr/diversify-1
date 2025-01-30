@@ -43,7 +43,7 @@
 <!--all of the user posts  -->
 <!-- Card for video  -->
 <div class="p-4 sm:ml-64 flex-col">
-   <% userPlaylist.forEach(ele=>{ %>
+   <% userPlaylist.forEach((ele, i)=>{ %>
        <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 text-center">
          <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto">
             <!-- Slidng indicator of media images -->
@@ -102,9 +102,11 @@
                      </h2>
                      <div>
                         <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                           <a href="">
-                              <p class="text-gray-500 dark:text-gray-400"></p>
-                           </a>
+                           <%playlistMedia[i].forEach((med)=> {%>
+                              <a href="">
+                                 <p class="text-gray-500 dark:text-gray-400"><%=med.name%></p>
+                              </a>
+                        <% }) %>
                         </div>
                       </div>
                     
