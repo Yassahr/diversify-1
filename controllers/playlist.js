@@ -1,5 +1,6 @@
 const Playlist = require("../models/Playlist");
 const Media = require("../models/Media");
+const YTapi = require("./youtube-api.js");
 const ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = {
@@ -37,6 +38,7 @@ module.exports = {
   //this will using the youtube api
   addNewMedia: async (req, res) => {
     //be sure to include pushing to on playlist media property
+    console.log('boom boom')
     try {
       await Playlist.create({
         todo: req.body.todoItem,

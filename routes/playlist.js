@@ -16,6 +16,9 @@ router.post("/createPlaylist/:id", playlistController.createPlaylist); //Create 
 
 router.put("/addPlaylist/:id", playlistController.addPlaylist);
 
+router.post("/addNewMedia", playlistController.addNewMedia);
+
+
 router.put("/likePlaylist/:id", playlistController.likePlaylist);
 //put request to like or upvote
 

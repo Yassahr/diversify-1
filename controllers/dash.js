@@ -73,8 +73,6 @@ module.exports = {
    let playlistMedia =  await Promise.all(userPlaylist.map(async(media)=> await mediaList(media._id)))
         //Thought should make this into seperate function that param is id of playlist  
       console.log("playlistMedia",playlistMedia)
-      //array of media object. 
-      // boom[0].media[0].name
       res.render("profile.ejs", { userPlaylist: userPlaylist, user: req.user, playlistMedia:playlistMedia });
     } catch (err) {
       console.log(err);
