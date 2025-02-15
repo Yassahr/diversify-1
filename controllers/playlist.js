@@ -35,6 +35,17 @@ module.exports = {
       console.log(err);
     }
   },
+  //used for searching for videos
+  searchAPI: async (req, res) => {
+    //be sure to include pushing to on playlist media property
+    try{
+    console.log(req.body.query)
+    const query=req.body.query
+   
+    } catch (err) {
+      console.log(err);
+    }
+  },
   //this will using the youtube api
   addNewMedia: async (req, res) => {
     //be sure to include pushing to on playlist media property

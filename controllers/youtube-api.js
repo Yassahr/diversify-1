@@ -10,6 +10,6 @@ module.exports = {
 
 search:(searchValues)=>{ 
 
-fetch(`https://www.googleapis.com/youtube/v3/search?key=${process.env.YOUTUBE_API_KEY}&part=snippet&q=${searchValues}`)
+    fetch(`https://www.googleapis.com/youtube/v3/search?key=${process.env.YOUTUBE_API_KEY}&part=snippet&q=${searchValues}&eventType=completed&maxResults=10&type=video&videoEmbeddable=true&relevanceLanguage=en`)
 }
 }

@@ -10,13 +10,13 @@ const { ensureAuth } = require("../middleware/auth");
 router.get("/:playlistId", ensureAuth, playlistController.playlistView); //Playlist dashboard
 
 router.post("/createPlaylist/:id", playlistController.createPlaylist); //Create new  playlist
-//prompted to create a name and type of media,
-//maybe a seperate get request to open up playlist page to search for media to add
-//search would be inside of get request controller code block
 
 router.put("/addPlaylist/:id", playlistController.addPlaylist);
 
-router.post("/addNewMedia", playlistController.addNewMedia);
+router.post("/searchAPI", playlistController.searchAPI);
+
+router.put("/addNewMedia", playlistController.addNewMedia);
+
 
 
 router.put("/likePlaylist/:id", playlistController.likePlaylist);
