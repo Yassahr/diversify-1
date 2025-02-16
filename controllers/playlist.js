@@ -2,6 +2,8 @@ const Playlist = require("../models/Playlist");
 const Media = require("../models/Media");
 const YTapi = require("./youtube-api.js");
 const ObjectId = require("mongoose").Types.ObjectId;
+const fetch = require("node-fetch");
+
 
 module.exports = {
   playlistView: async (req, res) => {
@@ -14,6 +16,7 @@ module.exports = {
       const mediaList = await Promise.all(playlist.media.map(async (el) => el));
       console.log(mediaList);
       res.render("playlist.ejs", { playlist: playlist, mediaList: mediaList });
+  
     } catch (err) {
       console.log(err);
     }
@@ -41,7 +44,8 @@ module.exports = {
     try{
     console.log(req.body.query)
     const query=req.body.query
-   
+   let results= YTapi.search(req,res, query)
+
     } catch (err) {
       console.log(err);
     }

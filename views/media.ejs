@@ -1,13 +1,12 @@
 <%- include('partials/header') -%>
 <!-- Card for video  -->
 <div class ="flex justify-center my-10">
-    <div class="max-w-lg bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
+    <div class="max-w-2xl bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
         <a href="#">
-            <video class="w-full" autoplay controls>
-                <!-- video class rounded-t-lg -->
-                <source src="/docs/videos/flowbite.mp4>" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+            <iframe id="ytplayer" type="text/html" width="640" height="360"
+                 src="https://www.youtube.com/embed/<%=media.mediaID%>?autoplay=1&origin=http://example.com"
+                frameborder="0">
+            </iframe>
         </a>
         <div class="p-5">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><%=media.name%></h5>

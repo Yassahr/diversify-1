@@ -8,6 +8,7 @@ const MediaSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  youtubeID: String,
   mediaDetails: {
     genre: String,
     description: String,

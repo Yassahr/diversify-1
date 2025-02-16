@@ -6,7 +6,7 @@ module.exports = {
     try {
       const media = await Media.findById(req.params.id).lean();
       const likes = await getLike(req.params.id)
-      console.log(likes)
+      console.log(media)
       res.render("media.ejs", { media: media, likes: likes});
     } catch (err) {
       console.log(err);
