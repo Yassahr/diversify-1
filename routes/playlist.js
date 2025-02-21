@@ -5,15 +5,20 @@ const router = express.Router();
 const playlistController = require("../controllers/playlist"); //->mediaController
 const { ensureAuth } = require("../middleware/auth");
 
-//Maybe adding more gets for type of playlist-> audio, video, music
 
-router.get("/:playlistId", ensureAuth, playlistController.playlistView); //Playlist dashboard
+
+
+// search request to the youtube api(must be before playlistview bc of id query)
+router.get("/searchAPI", playlistController.searchAPI);
+
+//renders playlist page based on query id
+router.get("/:playlistId", ensureAuth, playlistController.playlistView); 
 
 router.post("/createPlaylist/:id", playlistController.createPlaylist); //Create new  playlist
 
 router.put("/addPlaylist/:id", playlistController.addPlaylist);
 
-router.post("/searchAPI", playlistController.searchAPI);
+// router.get("/searchAPI", playlistController.searchAPI);
 
 router.put("/addNewMedia", playlistController.addNewMedia);
 

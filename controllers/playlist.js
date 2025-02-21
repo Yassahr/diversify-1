@@ -8,7 +8,6 @@ const fetch = require("node-fetch");
 module.exports = {
   playlistView: async (req, res) => {
     try {
-      console.log(req.params.playlistId);
       const playlist = await Playlist.findById(req.params.playlistId)
         .lean()
         .select("media");
@@ -40,12 +39,12 @@ module.exports = {
   },
   //used for searching for videos
   searchAPI: async (req, res) => {
+    console.log("I went down the search pathway like I was supposed to")
     //be sure to include pushing to on playlist media property
     try{
-    console.log(req.body.query)
     const query=req.body.query
-   let results= YTapi.search(req,res, query)
-
+    let results= await YTapi.search(req, res, query)
+      console.log("results", results.json())
     } catch (err) {
       console.log(err);
     }
