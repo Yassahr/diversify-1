@@ -25,15 +25,15 @@
                 <!-- When ejs return then remove the over-flow hiddle and make the h-full overflow-hidden h-0 -->
                 <div class=" flex flex-row  transition-all ease-in-out  duration-500  ">
                     <div class="p-4 sm:ml-64">
-                        
+                        <%vids.forEach((ele, i)=>{ %>
+
                            <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 flex justify-center">
                               <div class=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                                  <a href="#">
-                                    <video class="w-full" autoplay controls>
-                                       <!-- video class rounded-t-lg -->
-                                       <source src="/docs/videos/flowbite.mp4" type="video/mp4">
-                                       Youtube video Link
-                                    </video>
+                                    <iframe id="ytplayer" type="text/html" width="<%=vids.tnWidth%>" height="vids.tnHeight"
+                                        src="https://www.youtube.com/embed/<%=vids.videoId%>?autoplay=1&origin=http://example.com"
+                                        frameborder="0">
+                                     </iframe>
                                  </a>
                                  <a href="">
                                     <span class="px-3 hover:text-white text-gray-400">[insert Playlist Here] from [Insert user here] </span>
@@ -49,7 +49,7 @@
                                     <form
                                     class="inline-flex"
                                     action=""
-                                    <!-- method="POST" -->
+                                    method="POST"
                                      >
                                      <button type="submit" class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
                                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
@@ -61,8 +61,7 @@
                                  </div>
                               </div>
                            </div>
-                         
-                     
+                         <% }) %>
                       </div>
                 </div>
               </div>

@@ -44,7 +44,17 @@ module.exports = {
     try{
     const query=req.body.query
     let results= await YTapi.search(req, res, query)
-      console.log("results", results.json())
+    //return array of video data from YT api with relevant details
+    let vids = results.items.map(vid=>{
+        return {videoId: vid.id.videoId, 
+                title: vid.snippet.title, 
+                description: vid.snippet.description,
+                tnURL: vid.snippet.thumbnails.medium.url,
+                tnWidth: vid.snippet.thumbnails.medium.width,
+                tnHeight: vid.snippet.thumbnails.medium.height}
+      })
+    console.log(vids)
+    res.render("playlist.ejs", { vids: vids});
     } catch (err) {
       console.log(err);
     }
