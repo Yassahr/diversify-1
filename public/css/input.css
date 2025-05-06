@@ -1,7 +1,46 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.addButton {
+  /* Spacing & Layout */
+  margin: 0.75rem 0;  /* my-3 */
+  margin-right: 0.5rem;  /* me-2 */
+  margin-bottom: 0.5rem;  /* mb-2 */
+  padding: 0.625rem 1.25rem;  /* px-5 py-2.5 */
+  text-align: center;  /* text-center */
 
+  /* Typography */
+  color: white;  /* text-white */
+  font-weight: 500;  /* font-medium */
+  font-size: 0.875rem;  /* text-sm */
+  line-height: 1.25rem;
+
+  /* Background & Effects */
+  background: linear-gradient(to right, 
+    #8b5cf6,  /* from-purple-500 */
+    #7c3aed,  /* via-purple-600 */
+    #6d28d9   /* to-purple-700 */
+  );
+  border-radius: 0.5rem;  /* rounded-lg */
+
+  /* Interactions */
+  transition: all 0.3s ease;
+}
+
+.addButton:hover {
+  background: linear-gradient(to bottom right, 
+    #8b5cf6,  /* from-purple-500 */
+    #7c3aed,  /* via-purple-600 */
+    #6d28d9   /* to-purple-700 */
+  );
+}
+
+.addButton:focus {
+  outline: none;  /* focus:outline-none */
+  box-shadow: 0 0 0 4px rgba(216, 180, 254, 0.5);  /* focus:ring-4 focus:ring-purple-300 */
+}
+
+/* Dark Mode (if needed) */
+.dark .addButton:focus {
+  box-shadow: 0 0 0 4px rgba(126, 34, 206, 0.5);  /* dark:focus:ring-purple-800 */
+}
 /* h1 {
   color: red;
 }

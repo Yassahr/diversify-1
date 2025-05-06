@@ -2,3 +2,49 @@
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 </html>
+
+<div class=" flex flex-row  transition-all ease-in-out  duration-500  ">
+    <div class="p-4 sm:ml-64">
+        <%vids.forEach((ele, i)=>{ %>
+
+           <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 flex justify-center">
+              <div class=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                 <a href="#">
+                    <iframe id="ytplayer" type="text/html" width="<%=vids.tnWidth%>" height="vids.tnHeight"
+                        src="https://www.youtube.com/embed/<%=vids.videoId%>?autoplay=1&origin=http://example.com"
+                        frameborder="0">
+                     </iframe>
+                 </a>
+                 <a href="">
+                    <span class="px-3 hover:text-white text-gray-400">[insert Playlist Here] from [Insert user here] </span>
+                 </a>
+                 <div class="p-5">
+                    <a href="">
+                       <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">name</h5>
+                    </a>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Descrioption maybe</p>
+                    <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        likes
+                    </span>
+                    <form
+                    class="inline-flex"
+                    action=""
+                    method="POST"
+                     >
+                     <button type="submit" class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
+                       <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+                       <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>
+                       </svg>
+                       <span class="sr-only">Add Video</span>
+                       </button>             
+                    </form>
+                 </div>
+              </div>
+           </div>
+         <% }) %>
+      </div>
+</div>
+
+id="ytplayer" type="text/html" width="<%=vids.tnWidth%>" height="vids.tnHeight" class="h-auto max-w-full rounded-lg"
+src="https://www.youtube.com/embed/<%=vids.videoId%>?autoplay=1&origin=http://example.com"
+frameborder="0"> 

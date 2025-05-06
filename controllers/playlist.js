@@ -1,8 +1,6 @@
 const Playlist = require("../models/Playlist");
 const Media = require("../models/Media");
-const YTapi = require("./youtube-api.js");
 const ObjectId = require("mongoose").Types.ObjectId;
-const fetch = require("node-fetch");
 
 
 module.exports = {
@@ -11,15 +9,16 @@ module.exports = {
       const playlist = await Playlist.findById(req.params.playlistId)
         .lean()
         .select("media");
-      console.log(playlist, typeof playlist);
+      // console.log(playlist, typeof playlist);
       const mediaList = await Promise.all(playlist.media.map(async (el) => el));
-      console.log(mediaList);
+      // console.log(mediaList);
       res.render("playlist.ejs", { playlist: playlist, mediaList: mediaList });
   
     } catch (err) {
       console.log(err);
     }
   },
+
   createPlaylist: async (req, res) => {
     try {
       await Playlist.create({
@@ -37,29 +36,7 @@ module.exports = {
       console.log(err);
     }
   },
-  //used for searching for videos
-  searchAPI: async (req, res) => {
-    console.log("I went down the search pathway like I was supposed to")
-    //be sure to include pushing to on playlist media property
-    try{
-    const query=req.body.query
-    let results= await YTapi.search(req, res, query)
-    //return array of video data from YT api with relevant details
-    let vids = results.items.map(vid=>{
-        return {videoId: vid.id.videoId, 
-                title: vid.snippet.title, 
-                description: vid.snippet.description,
-                tnURL: vid.snippet.thumbnails.medium.url,
-                tnWidth: vid.snippet.thumbnails.medium.width,
-                tnHeight: vid.snippet.thumbnails.medium.height}
-      })
-    console.log(vids)
-    res.render("playlist.ejs", { vids: vids});
-    } catch (err) {
-      console.log(err);
-    }
-  },
-  //this will using the youtube api
+
   addNewMedia: async (req, res) => {
     //be sure to include pushing to on playlist media property
     console.log('boom boom')

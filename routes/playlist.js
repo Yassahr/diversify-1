@@ -8,9 +8,6 @@ const { ensureAuth } = require("../middleware/auth");
 
 
 
-// search request to the youtube api(must be before playlistview bc of id query)
-router.get("/searchAPI", playlistController.searchAPI);
-
 //renders playlist page based on query id
 router.get("/:playlistId", ensureAuth, playlistController.playlistView); 
 
