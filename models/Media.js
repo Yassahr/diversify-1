@@ -7,17 +7,28 @@ const MediaSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    default: "Untitled Media"
   },
   youtubeID: String,
   mediaDetails: {
-    genre: String,
-    description: String,
-    image: String,
+    genre: {
+      type: String,
+      default: "No genre"
+    },
+    description:{
+      type: String,
+      default: "No description"
+    },
+    image:{
+      type: String,
+      default: "No image"
+    },
   },
   likes: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      default:[]
     },
   ],
   addedOn: {
@@ -30,7 +41,10 @@ const MediaSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Playlist",
-      addedDate: Date,
+      addedDate: {
+        type: Date,
+        default: Date.now
+      }
     },
   ],
  

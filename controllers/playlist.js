@@ -38,20 +38,66 @@ module.exports = {
   },
 
   addNewMedia: async (req, res) => {
-    //be sure to include pushing to on playlist media property
-    console.log('boom boom')
+    let playlistId=req.body.playlistId;
+    let mediaId=req.body.mediaId;
+    console.log('addNewMedia Route')
     try {
-      await Playlist.create({
-        todo: req.body.todoItem,
-        completed: false,
-        userId: req.user.id,
-      });
-      console.log("Todo has been added!");
-      res.redirect("/home");
+      console.log(playlistId, mediaId)
+      const newMedia = await Media.findOneAndUpdate( 
+        {youtubeID: mediaId },
+         {
+          $addToSet: { 
+            onPlaylist: new ObjectId(playlistId)
+          }
+         }, 
+         {
+          new: true,
+          upsert: true,
+          // Return additional properties about the operation, not just the document
+         includeResultMetadata: true
+        }
+      );
+      newMedia.value instanceof Media; 
+      
+     if(newMedia.lastErrorObject.updatedExisting){
+      //if this is a new media
+      //add logic to add the media details
+     }
+
+     //add media to playlist
+     console.log("new media id",newMedia.value._id)
+     console.log("playlist", playlistId)
+     await Playlist.findOneAndUpdate(
+        {_id: new ObjectId(playlistId)}
+       ,
+      {
+        //when all info is added tp media addition route
+        //add full object to set
+        $addToSet: { 
+          media: 
+            {_id: newMedia.value._id}
+          
+        }
+       },
+       {
+        new: true
+       }
+      )
+      
+       console.log("media has been added")
+      // await Playlist.create({
+      //   todo: req.body.todoItem,
+      //   completed: false,
+      //   userId: req.user.id,
+      // });
+      res.json("media added")
+      
     } catch (err) {
       console.log(err);
     }
   },
+
+
   addPlaylist: async (req, res) => {
     try {
       await Playlist.create({

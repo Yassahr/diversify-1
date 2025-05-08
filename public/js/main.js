@@ -1,63 +1,89 @@
 //add click event for search 
 document.querySelector('.search').addEventListener('click', search);
+document.querySelector('.videoGallery').addEventListener('click', addToPlaylist);
 
 
 async function search(event){
-let query = document.querySelector("#simple-search").value
-console.log(query)
-  event.preventDefault();
-  try{
-    const response = await fetch(`http://localhost:2121/search/${query}` )
-    const data = await response.json()
-  //return array of video data from YT api with relevant details
-  let vids = data.items.map(vid=>{
-      return {videoId: vid.id.videoId, 
-              title: vid.snippet.title, 
-              description: vid.snippet.description,
-              tnURL: vid.snippet.thumbnails.medium.url,
-              tnWidth: vid.snippet.thumbnails.medium.width,
-              tnHeight: vid.snippet.thumbnails.medium.height}
-    })
-
-    if(vids.length==0){
-      
-      document.querySelector(".noResults").innerHTML="No Results. Try a different search."
-    }else{
-      document.querySelector(".videoGallery").classList.remove("h-0", "overflow-hidden")
-      vids.forEach(vid=>{
-        const videoContainer= document.createElement('div')
-        document.querySelector('.videoGallery').appendChild(videoContainer)
-
-        const iframe= document.createElement('iframe')
-        setAttributes(iframe, {
-          "id":`ytplayer-${vid.videoId}`,
-          "type":"text/html", 
-          "width": vid.tnWidth ? `${vid.tnWidth}%` : "100%",
-          "height": vid.tnHeight || "315", 
-          "src": `https://www.youtube.com/embed/${vid.videoId}?autoplay=1&origin==${window.location.origin}
-        `})
-        videoContainer.appendChild(iframe)
-
-        let addMediaBtn=document.createElement('button')
-        addMediaBtn.classList.add('addButton')
-        addMediaBtn.dataset.videoId = vid.videoId;
-        addMediaBtn.innerHTML="Add to Playlist"
-        videoContainer.appendChild(addMediaBtn)
-        
-     
+  let query = document.querySelector("#simple-search").value
+  console.log(query)
+    event.preventDefault();
+    try{
+      const response = await fetch(`http://localhost:2121/search/${query}` )
+      const data = await response.json()
+    //return array of video data from YT api with relevant details
+    let vids = data.items.map(vid=>{
+        return {videoId: vid.id.videoId, 
+                title: vid.snippet.title, 
+                description: vid.snippet.description,
+                tnURL: vid.snippet.thumbnails.medium.url,
+                tnWidth: vid.snippet.thumbnails.medium.width,
+                tnHeight: vid.snippet.thumbnails.medium.height}
       })
-    }
 
-  }catch(err){
-    console.log(err)
-  }
+      if(vids.length==0){
+        document.querySelector(".noResults").innerHTML="No Results. Try a different search."
+      }else{
+        document.querySelector(".videoGallery").classList.remove("h-0", "overflow-hidden")
+        vids.forEach(vid=>{
+          const videoContainer= document.createElement('div')
+          document.querySelector('.videoGallery').appendChild(videoContainer)
+          const iframe=document.createElement('iframe')
+          setAttributes(iframe, {
+            "id":`${vid.videoId}`,
+            "type":"text/html", 
+            "width": vid.tnWidth ? `${vid.tnWidth}%` : "100%",
+            "height": vid.tnHeight || "315", 
+            "src": `https://www.youtube.com/embed/${vid.videoId}?autoplay=1&origin==${window.location.origin}
+          `})
+          videoContainer.appendChild(iframe)
+
+          let addMediaBtn=document.createElement('button')
+          addMediaBtn.classList.add('addButton')
+          //make an object that includes all of the neccessary properties
+          addMediaBtn.dataset.videoId = vid.videoId;
+          addMediaBtn.innerHTML="Add to Playlist"
+          videoContainer.appendChild(addMediaBtn)
+          
+        })
+      }
+
+    }catch(err){
+      console.log(err)
+    }
 }
+
 
 //Clientside for put/patch request
-async function addToPlaylist(playlistId, mediaId){
+async function addToPlaylist(e){
+  let mediaId;
+  const playlistId= window.location.pathname.split('/').pop();
+
+if (e.target.classList.contains('addButton')) {
+     mediaId = e.target.dataset.videoId;
+  }
+  
+  //or it is sent over in the param of the clickEvent
+  console.log(playlistId, mediaId)
+    try{
+        const response = await fetch('/playlist/addNewMedia', {
+            method: 'put',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+                'mediaId': mediaId,
+                'playlistId':playlistId
+            })
+        })
+        const data = await response.json()
+        console.log(data)
+        location.reload()
+    }catch(err){
+        console.log(err)
+    }
 
 
 }
+
+
 
 
 // const deleteBtn = document.querySelectorAll(".del");

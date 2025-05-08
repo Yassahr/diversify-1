@@ -52,7 +52,8 @@ module.exports = {
     try {
       console.log(req.params.profileId);
       //find document associated with user
-      const profile = await User.findById(req.params.profileId)
+      let profileId= req.params.profileId == 1 ? req.user.id: req.params.profileId
+      const profile = await User.findById(profileId)
         .select("playlists")
         .lean();
        //return playlists associated with each user
