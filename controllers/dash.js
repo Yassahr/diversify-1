@@ -50,9 +50,9 @@ module.exports = {
   //All of the functions below are for when the user is in the profile of the user
   getProfile: async (req, res) => {
     try {
-      console.log(req.params.profileId);
+      console.log("param id",req.params.profileId);
       //find document associated with user
-      let profileId= req.params.profileId == 1 ? req.user.id: req.params.profileId
+      let profileId= req.params.profileId == "myprofile" ? req.user.id: req.params.profileId
       const profile = await User.findById(profileId)
         .select("playlists")
         .lean();
