@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const dashController = require("../controllers/dash");
-const { ensureAuth } = require("../middleware/auth");
+const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
 //feed
 
 //what are the main things user will be doing on dash
-router.get("/", dashController.dashboard);
+router.get("/",ensureAuth, dashController.dashboard);
 
 //get the profile with all of the users playlist
-router.get("/profile/:profileId", dashController.getProfile);
+router.get("/profile/:profileId",ensureAuth, dashController.getProfile);
 
 //post request adding playlist/media to there playlist( add to public or private)
 router.post("/addPlaylist/:playlistId", ensureAuth, dashController.addPlaylist);

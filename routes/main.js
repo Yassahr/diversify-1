@@ -11,9 +11,9 @@ router.get("/", dashController.getIndex);
 router.get("/auth/google", authController.googleAuth);
 router.get("/google/auth/callback", authController.googleCallback);
 
-router.get("/login", authController.getLogin);
+router.get("/login", ensureAuth, authController.getLogin);
 router.get("/logout", ensureGuest, authController.logout);
-router.get("/signup", authController.getSignup);
+router.get("/signup", ensureGuest, authController.getSignup);
 
 module.exports = router;
 //this page would remain mostly the same
