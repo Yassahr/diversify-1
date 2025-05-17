@@ -30,6 +30,7 @@ async function search(event){
           const iframe=document.createElement('iframe')
           setAttributes(iframe, {
             "id":`${vid.videoId}`,
+            "title": vid.title,
             "type":"text/html", 
             "width": vid.tnWidth ? `${vid.tnWidth}%` : "100%",
             "height": vid.tnHeight || "315", 
@@ -40,7 +41,15 @@ async function search(event){
           let addMediaBtn=document.createElement('button')
           addMediaBtn.classList.add('addButton')
           //make an object that includes all of the neccessary properties
-          addMediaBtn.dataset.videoId = vid.videoId;
+          //addMediaBtn.dataset.videoId = vid.videoId;
+          addMediaBtn.dataset.videoDets = {
+               videoId: vid.videoId, 
+                name: vid.title, 
+                description: vid.description,
+                url: vid.url,
+                width: vid.width,
+                height: vid.height
+          };
           addMediaBtn.innerHTML="Add to Playlist"
           videoContainer.appendChild(addMediaBtn)
           
@@ -58,8 +67,8 @@ async function addToPlaylist(e){
   let mediaId;
   const playlistId= window.location.pathname.split('/').pop();
 
-if (e.target.classList.contains('addButton')) {
-     mediaId = e.target.dataset.videoId;
+if (e.videoId.target.classList.contains('addButton')) {
+     mediaId = e.target.dataset.videoDets.videoId;
   }
   
   //or it is sent over in the param of the clickEvent
@@ -70,7 +79,8 @@ if (e.target.classList.contains('addButton')) {
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
                 'mediaId': mediaId,
-                'playlistId':playlistId
+                'playlistId':playlistId,
+                'videoObj':  e.target.dataset.videoDets
             })
         })
         const data = await response.json()
