@@ -39,6 +39,7 @@ module.exports = {
   likeMedia: async (req, res) => {
     const user = req.user._id;
     let mediaId =req.params.id;
+    console.log("like path succeed")
     try {
       await Media.findOneAndUpdate(
         { _id: mediaId},

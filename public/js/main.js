@@ -41,15 +41,17 @@ async function search(event){
           let addMediaBtn=document.createElement('button')
           addMediaBtn.classList.add('addButton')
           //make an object that includes all of the neccessary properties
-          //addMediaBtn.dataset.videoId = vid.videoId;
-          addMediaBtn.dataset.videoDets = {
-               videoId: vid.videoId, 
-                name: vid.title, 
-                description: vid.description,
-                url: vid.url,
-                width: vid.width,
-                height: vid.height
-          };
+          //adding Datat sets to video
+          addMediaBtn.dataset.videoId = vid.videoId;
+          addMediaBtn.dataset.name =  vid.title
+          addMediaBtn.dataset.description =  vid.description
+          addMediaBtn.dataset.url =  vid.tnURL
+          addMediaBtn.dataset.width =  vid.tnHeight
+          addMediaBtn.dataset.height =  vid.tnHeight
+
+
+      
+          ;
           addMediaBtn.innerHTML="Add to Playlist"
           videoContainer.appendChild(addMediaBtn)
           
@@ -64,15 +66,23 @@ async function search(event){
 
 //Clientside for put/patch request
 async function addToPlaylist(e){
-  let mediaId;
+  
+  let mediaId
+  let videoObj={
+    videoId: e.target.dataset.videoId,
+    name: e.target.dataset.name,
+    description: e.target.dataset.description,
+    url: e.target.dataset.url,
+    width: e.target.dataset.width, 
+    height: e.target.dataset.height
+  }
   const playlistId= window.location.pathname.split('/').pop();
 
-if (e.videoId.target.classList.contains('addButton')) {
-     mediaId = e.target.dataset.videoDets.videoId;
+if (e.target.classList.contains('addButton')) {
+     mediaId = e.target.dataset.videoId;
   }
-  
   //or it is sent over in the param of the clickEvent
-  console.log(playlistId, mediaId)
+  console.log("playlist, media, videoobj",playlistId, mediaId)
     try{
         const response = await fetch('/playlist/addNewMedia', {
             method: 'put',
@@ -80,12 +90,12 @@ if (e.videoId.target.classList.contains('addButton')) {
             body: JSON.stringify({
                 'mediaId': mediaId,
                 'playlistId':playlistId,
-                'videoObj':  e.target.dataset.videoDets
+                'videoObj': videoObj
             })
         })
         const data = await response.json()
         console.log(data)
-        location.reload()
+        // location.reload()
     }catch(err){
         console.log(err)
     }

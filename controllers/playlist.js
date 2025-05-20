@@ -40,33 +40,48 @@ module.exports = {
   addNewMedia: async (req, res) => {
     let playlistId=req.body.playlistId;
     let mediaId=req.body.mediaId;
+    let videoObj= req.body.videoObj
     console.log('addNewMedia Route')
     try {
-      console.log(playlistId, mediaId)
+      //if this media doesnt exist then create it 
+      const incomingMedia= await  Media.exists({youtubeID: mediaId })
+      if(incomingMedia===null){
+        await Media.create({
+          youtubeID: mediaId,
+         name: videoObj.name,
+         description: videoObj.description,
+         url: videoObj.url,
+         width: videoObj.width,
+     })
+      }
+      console.log(playlistId, mediaId, "",videoObj)
+      //add it to the new media onPlaylist array
       const newMedia = await Media.findOneAndUpdate( 
         {youtubeID: mediaId },
          {
           $addToSet: { 
             onPlaylist: new ObjectId(playlistId)
-          }
+          }, 
          }, 
          {
           new: true,
-          upsert: true,
           // Return additional properties about the operation, not just the document
          includeResultMetadata: true
         }
       );
-      newMedia.value instanceof Media; 
       
-     if(newMedia.lastErrorObject.updatedExisting){
-      //if this is a new media
-      //add logic to add the media details
-     }
+    //   newMedia.value instanceof Media; 
+      
+    //  if(newMedia.lastErrorObject.updatedExisting){
+    //   //if this is a new media
+    //   //add logic to add the media details
+    
+    //  }
 
      //add media to playlist
      console.log("new media id",newMedia.value._id)
-     console.log("playlist", playlistId)
+
+     //add the new media to the appropriate playlist
      await Playlist.findOneAndUpdate(
         {_id: new ObjectId(playlistId)}
        ,
@@ -76,7 +91,6 @@ module.exports = {
         $addToSet: { 
           media: 
             {_id: newMedia.value._id}
-          
         }
        },
        {
@@ -85,11 +99,7 @@ module.exports = {
       )
       
        console.log("media has been added")
-      // await Playlist.create({
-      //   todo: req.body.todoItem,
-      //   completed: false,
-      //   userId: req.user.id,
-      // });
+    
       res.json("media added")
       
     } catch (err) {
