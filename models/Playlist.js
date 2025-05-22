@@ -22,7 +22,6 @@ const PlaylistSchema = new mongoose.Schema({
   },
   mediaType: {
     type: String,
-    required: true,
   },
   likes: [
     {

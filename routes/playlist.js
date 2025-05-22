@@ -11,7 +11,7 @@ const { ensureAuth } = require("../middleware/auth");
 //renders playlist page based on query id
 router.get("/:playlistId", ensureAuth, playlistController.playlistView); 
 
-router.post("/createPlaylist/:id", playlistController.createPlaylist); //Create new  playlist
+router.post("/createPlaylist/", playlistController.createPlaylist); //Create new  playlist
 
 router.put("/addPlaylist/:id", playlistController.addPlaylist);
 

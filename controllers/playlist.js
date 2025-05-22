@@ -21,17 +21,39 @@ module.exports = {
 
   createPlaylist: async (req, res) => {
     try {
-      await Playlist.create({
-        todo: req.body.todoItem,
-        completed: false,
-        userId: req.user.id,
-      });
-      console.log("Todo has been added!");
-      res.redirect("/home");
-      //will create new playlist
-      //Ask for name and public private
-      //then trigger addNew media?
-      //redirect to new playlist page
+      //creating new playlist
+        const newPlaylist = new Playlist();
+        console.log(req.user )
+        newPlaylist.name = req.body.playlistName;
+        newPlaylist.playlistDescription = req.body.playlistDescription;
+        newPlaylist.creatorId = req.user;
+        newPlaylist.userId = req.user;
+
+        const playlist = await newPlaylist.save();
+
+        //append to user 
+        await Playlist.findOneAndUpdate(
+          {_id: new ObjectId(req.body.id)}
+         ,
+        {
+          $addToSet: { 
+            playlist: 
+              {_id: playlist._id}
+          }
+         },
+         {
+          new: true
+         }
+        )
+console.log(playlist._id)
+       
+res.status(200).json({
+  success: true,
+  redirectUrl: `http://localhost:2121/playlist/${playlist._id}`
+});       
+    
+      console.log("playlistbeen added!");
+     
     } catch (err) {
       console.log(err);
     }

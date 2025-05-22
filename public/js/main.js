@@ -1,8 +1,16 @@
-//add click event for search 
+//Playlist page
+if(document.querySelector('.search')){
 document.querySelector('.search').addEventListener('click', search);
+}
+//Playlist page
+if(document.querySelector('.videoGallery')){
 document.querySelector('.videoGallery').addEventListener('click', addToPlaylist);
+}
+if(document.querySelector("#addPlaylist")){
+document.querySelector('#addPlaylist').addEventListener('click', addPlaylist);
+}
 
-
+//Playlist page
 async function search(event){
   let query = document.querySelector("#simple-search").value
   console.log(query)
@@ -48,9 +56,6 @@ async function search(event){
           addMediaBtn.dataset.url =  vid.tnURL
           addMediaBtn.dataset.width =  vid.tnHeight
           addMediaBtn.dataset.height =  vid.tnHeight
-
-
-      
           ;
           addMediaBtn.innerHTML="Add to Playlist"
           videoContainer.appendChild(addMediaBtn)
@@ -62,11 +67,9 @@ async function search(event){
       console.log(err)
     }
 }
-
-
-//Clientside for put/patch request
 async function addToPlaylist(e){
-  
+//Clientside for put/patch request
+
   let mediaId
   let videoObj={
     videoId: e.target.dataset.videoId,
@@ -101,6 +104,53 @@ if (e.target.classList.contains('addButton')) {
     }
 
 
+}
+
+
+// Profile Page
+async function addPlaylist(){
+  const modalEl = document.getElementById('info-popup');
+const privacyModal = new Modal(modalEl, {
+    placement: 'center'
+});
+
+privacyModal.show();
+
+const closeModalEl = document.getElementById('close-modal');
+closeModalEl.addEventListener('click', function() {
+    privacyModal.hide();
+});
+
+const acceptPrivacyEl = document.getElementById('confirm-button');
+acceptPrivacyEl.addEventListener('click', async function() {
+  try {
+      const playlistName= document.querySelector('#plName').value
+      const playlistDescription= document.querySelector('#plDescription').value
+console.log(playlistName, playlistDescription)
+        const response = await fetch("http://localhost:2121/playlist/createPlaylist", {
+          method: "post",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            playlistName:playlistName,
+            playlistDescription: playlistDescription,
+
+          }),
+        
+        });
+        const data = await response.json(); // Now safe to parse JSON
+        console.log(data);
+      
+        // Redirect manually after success
+        if (data.success) {
+          window.location.href = data.redirectUrl;
+        }
+        
+      } catch (err) {
+        console.log(err);
+      }
+    alert('New Playlist Created');
+    privacyModal.hide();
+});
 }
 
 
