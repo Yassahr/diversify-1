@@ -11,10 +11,13 @@ module.exports = {
       const playlist = await Playlist.findById(req.params.playlistId)
         .lean()
         .select("media");
-      // console.log(playlist, typeof playlist);
+        const playlistName = await Playlist.findById(req.params.playlistId)
+        .lean()
+        .select("name");
+      // console.log(playlistName, typeof playlist);
       const mediaList = await Promise.all(playlist.media.map(async (el) => el));
-      // console.log(mediaList);
-      res.render("playlist.ejs", { playlist: playlist, mediaList: mediaList });
+      console.log(mediaList, mediaList);
+      res.render("playlist.ejs", { playlist: playlistName, mediaList: mediaList });
   
     } catch (err) {
       console.log(err);
@@ -199,14 +202,14 @@ res.status(200).json({
   },
   deletePlaylist: async (req, res) => {
     try {
-      console.log("req.user._id:",req.user._id,"req.params.id:", req.params.id)
+      console.log("req.user._id:",req.user._id,req.user,"req.params.id:", req.params.id)
       // let iD=String(req.user._id)
       // iD=iD.split(iD.indexOf("\'"), iD.lastIndexOf("\'"))
       // console.log(iD)
      let deletedPl= await User.updateOne(
-          { _id:req.user._id },
+          { _id: req.user._id },
           {$pull:
-            {playlist:  new Object(req.params.id) }
+            {playlist: new Object(req.params.id) }
           }
           );
         

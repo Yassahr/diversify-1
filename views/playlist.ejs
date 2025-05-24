@@ -29,34 +29,44 @@
                 <!--  -->
               </div>
             <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-4 py-3">Name</th>
-                            <th scope="col" class="px-4 py-3">Description</th>
-                            <th scope="col" class="px-4 py-3">Likes</th>
-                            <th scope="col" class="px-4 py-3">
-                                <span class="sr-only"></span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%mediaList.forEach((ele, i)=>{ %>
-                            <tr class="border-b dark:border-gray-700">
-                                 <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <a href="/media/<%=ele.id%>" class="hover:text-gray-400">
-                                         <%=ele.name%>
-                                     </a>                              
+                <span class="text-gray-400">Playlist</span>
+                <h1 class="text-4xl font-extrabold dark:text-white">
+                    <%=playlist.name%>
+                </h1>
+                <%if(mediaList.length==0){%>
+                    <p class="mb-3 text-lg text-gray-500 md:text-xl dark:text-gray-400">Playlist empty. Use Search to add new media to <%=playlist.name%> playlist</p>
+                <% } else{ %> 
+   
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-4 py-3">Name</th>
+                                <th scope="col" class="px-4 py-3">Description</th>
+                                <th scope="col" class="px-4 py-3">Likes</th>
+                                <th scope="col" class="px-4 py-3">
+                                    <span class="sr-only"></span>
                                 </th>
-                                <td class="px-4 py-3"><%=ele.description%></td>
-                                <td class="px-4 py-3"><%=ele.likes||0%></td>
-                                <td class="px-4 py-3 flex items-center justify-end">
-                                       <a href="#" class="block py-2 px-4 text-sm text-white-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
-                                </td>
                             </tr>
-                         <% }) %>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <%mediaList.forEach((ele, i)=>{ %>
+                                <tr class="border-b dark:border-gray-700">
+                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <a href="/media/<%=ele.id%>" class="hover:text-gray-400">
+                                            <%=ele.name%>
+                                        </a>                              
+                                    </th>
+                                    <td class="px-4 py-3"><%=ele.description%></td>
+                                    <td class="px-4 py-3"><%=ele.likes||0%></td>
+                                    <td class="px-4 py-3 flex items-center justify-end">
+                                        <a href="#" class="block py-2 px-4 text-sm text-white-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+
+                <% } %>
             </div>
          
         </div>
