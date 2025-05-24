@@ -9,6 +9,9 @@ document.querySelector('.videoGallery').addEventListener('click', addToPlaylist)
 if(document.querySelector("#addPlaylist")){
 document.querySelector('#addPlaylist').addEventListener('click', addPlaylist);
 }
+// if(document.querySelector(".deletePl")){
+//   document.querySelector('.deletePl').addEventListener('click', deletePlaylist);
+//   }
 
 //Playlist page
 async function search(event){
@@ -155,6 +158,25 @@ console.log(playlistName, playlistDescription)
 
 
 
+// Delete Playlist Path
+// async function deletePlaylist() {
+//     const playlistId = this.parentNode
+//     console.log(playlistId)
+//     try {
+//       const response = await fetch("todos/deleteTodo", {
+//         method: "delete",
+//         headers: { "Content-type": "application/json" },
+//         body: JSON.stringify({
+//           playlistId: playlistId,
+//         }),
+//       });
+//       const data = await response.json();
+//       console.log(data);
+//       location.reload();
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   }
 
 // const deleteBtn = document.querySelectorAll(".del");
 // const todoItem = document.querySelectorAll("span.not");

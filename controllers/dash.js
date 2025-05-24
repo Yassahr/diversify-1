@@ -50,9 +50,10 @@ module.exports = {
   //All of the functions below are for when the user is in the profile of the user
   getProfile: async (req, res) => {
     try {
-      console.log("param id",req.params.profileId);
+      console.log("param id",req.params.profileId, req.user.id);
       //find document associated with user
       let profileId= req.params.profileId == "myprofile" ? req.user.id: req.params.profileId
+      console.log(profileId)
       const profile = await User.findById(profileId)
         .select("playlists")
         .lean();
@@ -69,8 +70,7 @@ module.exports = {
             .exec();
         }),
       );
-      // console.log(userPlaylist);
-//get mediaList for each playlist
+     
    let playlistMedia =  await Promise.all(userPlaylist.map(async(media)=> await mediaList(media._id)))
         //Thought should make this into seperate function that param is id of playlist  
       console.log("playlistMedia",playlistMedia)

@@ -1,4 +1,6 @@
 const Playlist = require("../models/Playlist");
+const User = require("../models/User");
+
 const Media = require("../models/Media");
 const ObjectId = require("mongoose").Types.ObjectId;
 
@@ -196,10 +198,19 @@ res.status(200).json({
     }
   },
   deletePlaylist: async (req, res) => {
-    console.log(req.body.todoIdFromJSFile);
     try {
-      await Playlist.findOneAndDelete({ _id: req.body.todoIdFromJSFile });
-      console.log("Deleted Todo");
+      console.log("req.user._id:",req.user._id,"req.params.id:", req.params.id)
+      // let iD=String(req.user._id)
+      // iD=iD.split(iD.indexOf("\'"), iD.lastIndexOf("\'"))
+      // console.log(iD)
+     let deletedPl= await User.updateOne(
+          { _id:req.user._id },
+          {$pull:
+            {playlist:  new Object(req.params.id) }
+          }
+          );
+        
+          console.log("deleted playlist", deletedPl)
       res.json("Deleted It");
       //Go in user model, find playlist, then remove it
     } catch (err) {
