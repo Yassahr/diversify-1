@@ -13,10 +13,16 @@ module.exports = {
       const user = req.user;
       //all post sorted from most-> less recent
       const posts = await Media.find().sort({ addedOn: -1 }).lean();
+      console.log("media object", )
 
       //get the Ids and the likes for all media loaded on pages
       await Promise.all(posts.map(async media=>{
-        return media.like = await getLike(media._id) 
+         media.like = await getLike(media._id) 
+        if(media.onPlaylist){
+          //need to add the name of playlist to the on playlist schemea to it and add helper function for only then Id to be sent ober
+        media.playlistName= await media.onPlaylist.pop()
+        console.log(media.playlistName)
+      }
       }))
 // >>will need to add on playlist here
       res.render("dashboard.ejs", { post: posts, user: user });

@@ -10,20 +10,14 @@ const MediaSchema = new mongoose.Schema({
     default: "Untitled Media"
   },
   youtubeID: String,
-  mediaDetails: {
-    genre: {
-      type: String,
-      default: "No genre"
-    },
-    description:{
+  description:{
       type: String,
       default: "No description"
     },
-    image:{
+  image:{
       type: String,
       default: "No image"
     },
-  },
   likes: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -31,6 +25,10 @@ const MediaSchema = new mongoose.Schema({
       default:[]
     },
   ],
+  width:{
+    type: Number,
+    
+  },
   addedOn: {
     //might need an additional date the see the latest time it was added
     type: Date,
@@ -38,14 +36,15 @@ const MediaSchema = new mongoose.Schema({
   },
   //The date playlist the media is apart of and the date it was added to the playlist
   onPlaylist: [
-    {
+    [ {type: String},
+      {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Playlist",
       addedDate: {
         type: Date,
         default: Date.now
       }
-    },
+    }],
   ],
  
 });
