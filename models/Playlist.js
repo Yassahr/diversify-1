@@ -30,15 +30,7 @@ const PlaylistSchema = new mongoose.Schema({
       default: 0,
     },
   ],
-  media: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Media",
-      name: String,
-      description: String,
-      image: String,
-    },
-  ],
+  media: [],
   public: {
     type: Boolean,
     default: false,

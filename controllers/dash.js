@@ -71,16 +71,19 @@ module.exports = {
             return `No task with id :${el}`;
           }
           return await Playlist.findById(el)
-            .select({ name: 1, likes: 1 })
+            .select({ name: 1, likes: 1,})
             .lean()
             .exec();
         }),
       );
-     
-   let playlistMedia =  await Promise.all(userPlaylist.map(async(media)=> await mediaList(media._id)))
+      imageSlide
+  const slideshow =  await Promise.all(userPlaylist.map(async(media)=> await imageSlide(media._id)))
+
+   const playlistMedia =  await Promise.all(userPlaylist.map(async(media)=> await mediaList(media._id)))
+
         //Thought should make this into seperate function that param is id of playlist  
-      console.log("playlistMedia",playlistMedia)
-      res.render("profile.ejs", { userPlaylist: userPlaylist, user: req.user, playlistMedia:playlistMedia });
+      console.log( "slideshow",slideshow)
+      res.render("profile.ejs", { userPlaylist: userPlaylist, user: req.user, playlistMedia:playlistMedia, slideshow: slideshow });
     } catch (err) {
       console.log(err);
     }
@@ -158,4 +161,9 @@ async function mediaList(id){
   let mediaLists = await Playlist.findById((id)).select('media.name').lean()
   // console.log('medialist',mediaLists.media)
   return mediaLists.media
+}
+async function imageSlide(id){
+  let imageURL = await Playlist.findById((id)).select('media.image').lean()
+  console.log("imageurl",imageURL)
+  return imageURL.media
 }

@@ -18,12 +18,12 @@
          <div class="max-w-2xl bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
                <iframe id="ytplayer" type="text/html" width="640" height="360"
-                 src="https://www.youtube.com/embed/<%=post.mediaID%>?autoplay=1&origin=http://example.com"
+                 src="https://www.youtube.com/embed/<%=ele.youtubeID%>?autoplay=1"
                 frameborder="0">
-            </iframe>
+               </iframe>
             </a>
-            <a href="/playlist/<%= ele.id%>">
-               <span class="px-3 hover:text-white text-gray-400"> From <%= ele.playlistName ? ele.description: "unknown"%> playlist </span>
+            <a href="/playlist/<%= ele.playlistName%>">
+               <span class="px-3 hover:text-white text-gray-400"> View Playlist </span>
             </a>
             <div class="p-5">
                <a href="/media/<%=ele._id%>">

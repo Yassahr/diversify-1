@@ -101,7 +101,7 @@ if (e.target.classList.contains('addButton')) {
         })
         const data = await response.json()
         console.log(data)
-        // location.reload()
+        location.reload()
     }catch(err){
         console.log(err)
     }

@@ -1,6 +1,5 @@
 const Playlist = require("../models/Playlist");
 const User = require("../models/User");
-
 const Media = require("../models/Media");
 const ObjectId = require("mongoose").Types.ObjectId;
 
@@ -11,13 +10,16 @@ module.exports = {
       const playlist = await Playlist.findById(req.params.playlistId)
         .lean()
         .select("media");
+      const creatorId= await Playlist.findById(req.params.playlistId)
+      .lean()
+      .select("creatorId");
         const playlistName = await Playlist.findById(req.params.playlistId)
         .lean()
         .select("name");
       // console.log(playlistName, typeof playlist);
       const mediaList = await Promise.all(playlist.media.map(async (el) => el));
-      console.log(mediaList, mediaList);
-      res.render("playlist.ejs", { playlist: playlistName, mediaList: mediaList });
+      console.log(creatorId);
+      res.render("playlist.ejs", { playlist: playlistName, mediaList: mediaList , creatorId:creatorId});
   
     } catch (err) {
       console.log(err);
@@ -81,7 +83,7 @@ res.status(200).json({
          width: videoObj.width,
      })
       }
-      console.log(playlistId, mediaId, "",videoObj)
+      console.log(playlistId, mediaId,videoObj)
       //add it to the new media onPlaylist array
       const newMedia = await Media.findOneAndUpdate( 
         {youtubeID: mediaId },
@@ -107,7 +109,7 @@ res.status(200).json({
 
      //add media to playlist
      console.log("new media id",newMedia.value._id)
-
+        
      //add the new media to the appropriate playlist
      await Playlist.findOneAndUpdate(
         {_id: new ObjectId(playlistId)}
@@ -117,7 +119,13 @@ res.status(200).json({
         //add full object to set
         $addToSet: { 
           media: 
-            {_id: newMedia.value._id}
+            {
+            id: newMedia.value._id,
+            name: videoObj.name,
+            image: videoObj.url,
+            description: videoObj.description,
+            youtubeId: mediaId,
+           }
         }
        },
        {
@@ -202,14 +210,14 @@ res.status(200).json({
   },
   deletePlaylist: async (req, res) => {
     try {
-      console.log("req.user._id:",req.user._id,req.user,"req.params.id:", req.params.id)
+      console.log("req.user._id:",req.user._id,req.user,"req.params.id:", req.params.id,)
       // let iD=String(req.user._id)
       // iD=iD.split(iD.indexOf("\'"), iD.lastIndexOf("\'"))
       // console.log(iD)
-     let deletedPl= await User.updateOne(
+     let deletedPl= await User.findOneAndUpdate(
           { _id: req.user._id },
           {$pull:
-            {playlist: new Object(req.params.id) }
+            {playlists: new ObjectId(req.params.id) }
           }
           );
         

@@ -33,6 +33,11 @@
                 <h1 class="text-4xl font-extrabold dark:text-white">
                     <%=playlist.name%>
                 </h1>
+                <a href="http://localhost:2121/home/profile/<%=creatorId.creatorId%>">
+                    <h3 class="text-1xl  dark:text-white">
+                        Creator Profile
+                    </h3>
+                </a>
                 <%if(mediaList.length==0){%>
                     <p class="mb-3 text-lg text-gray-500 md:text-xl dark:text-gray-400">Playlist empty. Use Search to add new media to <%=playlist.name%> playlist</p>
                 <% } else{ %> 
