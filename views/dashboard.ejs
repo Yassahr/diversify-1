@@ -9,7 +9,6 @@
        </div>
    </div>
  </section>
-
  <!--all of the user posts  -->
  <!-- Card for video  -->
  <div class="p-4 sm:ml-64 md:max-w-md">
@@ -30,6 +29,9 @@
                   <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><%= ele.name%></h5>
                </a>
                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><%= ele.description ? ele.description: "no description"%></p>
+               <button type="button" id="playlist-popup-button" class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                  Add Media to Playlist
+              </button>
                <span class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   <%= ele.like%> likes
                </span>
@@ -43,13 +45,41 @@
                   <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>
                   </svg>
                   <span class="sr-only">Likes</span>
-                  </button>             
+                </button>             
                </form>
             </div>
          </div>
       </div>
     <% }) %>
 
+ </div>
+ <!-- User Playlist Popup -->
+ <div id="playlist-popup" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+   <div class="relative p-4 w-full max-w-lg h-full md:h-auto">
+       <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 md:p-8">
+           <div class="flex flex-col mb-4 text-sm font-light text-gray-500 dark:text-gray-400">
+               <h3 class="mb-3 text-2xl font-bold text-gray-900 dark:text-white">Which Playlist Would You Like to Add This To?</h3>
+               <label for="plName">User Playlists</label>
+               <%userPlaylistName.forEach(ele=>{ %>
+                  <button 
+                     class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" 
+                     type="button" 
+                     name="playlist"
+                     value= "<%=ele._id%>"
+                     id="plName">
+                     <%=ele.name%>
+                  </button>
+                <% }) %>
+           </div>
+           <div class="justify-between items-center pt-0 space-y-4 sm:flex sm:space-y-0">
+               <a href="#" class="font-medium text-primary-600 dark:text-primary-500 hover:underline">Learn more about privacy</a>
+               <div class="items-center space-y-4 sm:space-x-4 sm:flex sm:space-y-0">
+                   <button id="close-modal" type="button"  class="py-2 px-4 w-full text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 sm:w-auto hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancel</button>
+                   <button id="add-button" type="submit" class="py-2 px-4 w-full text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-auto hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Add</button>
+               </div>
+           </div>
+       </div>
+   </div>
  </div>
  
 

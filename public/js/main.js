@@ -9,6 +9,9 @@ document.querySelector('.videoGallery').addEventListener('click', addToPlaylist)
 if(document.querySelector("#addPlaylist")){
 document.querySelector('#addPlaylist').addEventListener('click', addPlaylist);
 }
+if(document.querySelector("#playlist-popup-button")){
+  document.querySelector('#playlist-popup-button').addEventListener('click', addMedia);
+  }
 // if(document.querySelector(".deletePl")){
 //   document.querySelector('.deletePl').addEventListener('click', deletePlaylist);
 //   }
@@ -156,6 +159,53 @@ console.log(playlistName, playlistDescription)
 });
 }
 
+//Add existing media to an exisitng playlist
+async function addMedia(){
+  const modalEl = document.getElementById('playlist-popup');
+const privacyModal = new Modal(modalEl, {
+    placement: 'center'
+});
+
+privacyModal.show();
+
+const closeModalEl = document.getElementById('close-modal');
+closeModalEl.addEventListener('click', function() {
+    privacyModal.hide();
+});
+
+const acceptPrivacyEl = document.getElementById('#add-button');
+acceptPrivacyEl.addEventListener('click', async function(event) {
+  alert('hello')
+  try {
+      const playlistId= event.target.value
+      console.log(playlistId)
+      const playlistDescription= document.querySelector('#plDescription').value
+console.log(playlistName, playlistDescription)
+        const response = await fetch("http://localhost:2121/playlist/createPlaylist", {
+          method: "put",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            playlistName:playlistName,
+            playlistDescription: playlistDescription,
+
+          }),
+        
+        });
+        const data = await response.json(); // Now safe to parse JSON
+        console.log(data);
+      
+        // Redirect manually after success
+        if (data.success) {
+          window.location.href = data.redirectUrl;
+        }
+        
+      } catch (err) {
+        console.log(err);
+      }
+    alert('New Playlist Created');
+    privacyModal.hide();
+});
+}
 
 
 // Delete Playlist Path

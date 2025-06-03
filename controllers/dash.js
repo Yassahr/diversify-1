@@ -10,7 +10,7 @@ module.exports = {
   },
   dashboard: async (req, res) => {
     try {
-      const user = req.user;
+      const user = await req.user;
       //all post sorted from most-> less recent
       const posts = await Media.find().sort({ addedOn: -1 }).lean();
       console.log("media object", )
@@ -21,11 +21,18 @@ module.exports = {
         if(media.onPlaylist){
           //need to add the name of playlist to the on playlist schemea to it and add helper function for only then Id to be sent ober
         media.playlistName= await media.onPlaylist.pop()
-        console.log(media.playlistName)
+        console.log("user obj",user)
       }
       }))
+      //name of playlists
+      const userPlaylistName=await User.findById(user).populate('playlists')
+      console.log("playlists for user", userPlaylistName.playlists )
+      // const userPlaylistName= Promise.all(user.playlists.map(async(playlist)=>{
+      //   console.log(playlist)
+
+      // }))
 // >>will need to add on playlist here
-      res.render("dashboard.ejs", { post: posts, user: user });
+      res.render("dashboard.ejs", { post: posts, user: user, userPlaylistName: userPlaylistName.playlists});
     } catch (err) {
       console.log(err);
     }

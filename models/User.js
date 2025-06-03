@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
   },
   password: String,
   //need to add an array of playlists
-  playlist: [
+  playlists: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Playlist",
