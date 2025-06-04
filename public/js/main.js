@@ -173,8 +173,8 @@ closeModalEl.addEventListener('click', function() {
     privacyModal.hide();
 });
 
-const acceptPrivacyEl = document.getElementById('#add-button');
-acceptPrivacyEl.addEventListener('click', async function(event) {
+const choosePlaylist = document.getElementById('add-button');
+choosePlaylist.addEventListener('click', async function(event) {
   alert('hello')
   try {
       const playlistId= event.target.value
